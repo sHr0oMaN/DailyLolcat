@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "Daily Lolcatz";
+}
+
+<div class="jumbotron" align="right">
+    <h1>Daily Lolcatz</h1>
+    <p class="lead">Signup to receive daily lolcatz in your email</p>
+    <p>@Html.ActionLink("Sign up here", "Signup", "Home", new { area = "" }, new { @class = "btn btn-primary btn-lg" })</p>
+</div>
+
+<div class="row" style="position: absolute; bottom: 20px;">
+    <div class="col-md-4">
+        <h2>Upload</h2>
+        <p>
+            Upload your favourite images of cute cats - with hipster ironic text!
+        </p>
+        <p>@Html.ActionLink("Insert kitteh into interwebs", "Upload", "Home", new { area = "" }, new { @class = "btn btn-primary" })</p>
+    </div>
+    <div class="col-md-4">
+        <h2>View lolcatz</h2>
+        <p>Go here to view random images of cute kittehs</p>
+        <p>@Html.ActionLink("Take me to the kittehs", "ViewRandom", "Home", new { area = "" }, new { @class = "btn btn-primary" })</p>
+    </div>
+    <div class="col-md-4">
+        <h2>Tag lolcatz</h2>
+        <p>Make lolcatz better - tag images with wordz</p>
+        <p>@Html.ActionLink("Lemme go tag some kittehs", "ViewRandom", "Home", new { area = "" }, new { @class = "btn btn-primary" })</p>
+    </div>
+</div>
