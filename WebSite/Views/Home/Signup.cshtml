@@ -1,7 +1,11 @@
-﻿@{
-    ViewBag.Title = "Signup";
-}
-<h2>@ViewBag.Title.</h2>
+﻿<h2>Signup.</h2>
+
 <h3>@ViewBag.Message</h3>
 
-<p>Use this area to provide additional information.</p>
+@using (Html.BeginForm("Signup", "Home", FormMethod.Post))
+{
+    <label for="emailAddress">Email:</label>
+    <input type="email" name="emailAddress" id="emailAddress" /><br />
+
+    <input type="submit" value="Get sum kittehs" class="btn btn-primary" />
+}

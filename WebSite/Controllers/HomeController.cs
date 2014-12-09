@@ -2,9 +2,12 @@
 using System.IO;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.Ajax.Utilities;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
+using Microsoft.WindowsAzure.Storage.Table;
+using WebSite.Models;
 
 namespace WebSite.Controllers
 {
@@ -15,9 +18,46 @@ namespace WebSite.Controllers
             return View();
         }
 
+        [HttpGet]
         public ActionResult Signup()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Sign up to receive a random lolcat in urz email each day.";
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Signup(string emailAddress)
+        {
+            if (emailAddress.IsNullOrWhiteSpace())
+            {
+                ViewBag.Message = "Please enter an email address.";
+                return View();
+            }
+
+            try
+            {
+                // Retrieve the storage account from the connection string.
+                CloudStorageAccount storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
+
+                CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
+
+                CloudTable table = tableClient.GetTableReference("coolPeople");
+
+                var person = new Person(emailAddress);
+
+                // Create the TableOperation that inserts the customer entity.
+                TableOperation insertOperation = TableOperation.Insert(person);
+
+                // Execute the insert operation.
+                table.Execute(insertOperation);
+
+                ViewBag.Message = "Wait one day for kitteh goodness.";
+            }
+            catch (Exception e)
+            {
+                ViewBag.Message = "PROBLEMZ :( " + e.Message;
+            }
 
             return View();
         }
@@ -31,24 +71,16 @@ namespace WebSite.Controllers
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase file, string tags)
         {
-            /*
-                TODO:
-             *          1. Download file
-             *          2. Check for uniqueness (MD5 hash)
-             *          3. If unqiue,
-             *              3.1 upload, show thanks
-             *              3.2 else show thanks
-             */
-
             if (file == null || file.ContentLength <= 0)
             {
                 ViewBag.Message = "You have not specified a file.";
+                return View();
             }
 
             try
             {
                 // Retrieve storage account from connection string.
-                var connectionString = CloudConfigurationManager.GetSetting("BlobStorageConnectionString");
+                var connectionString = CloudConfigurationManager.GetSetting("StorageConnectionString");
                 CloudStorageAccount storageAccount = CloudStorageAccount.Parse(connectionString);
 
                 // Create the blob client.
@@ -68,12 +100,10 @@ namespace WebSite.Controllers
             }
             catch (Exception e)
             {
-                ViewBag.Message = "ERROR:" + e.Message + "<br/><br/>";
+                ViewBag.Message = "PROBLEMZ :( " + e.Message;
             }
 
             return View(); 
-
-
         }
 
         public ActionResult ViewRandom()
