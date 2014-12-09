@@ -16,10 +16,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configurations", "Configura
 		PublishScripts\Configurations\WebSite-WAWS-dev.json = PublishScripts\Configurations\WebSite-WAWS-dev.json
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebMailer", "WebMailer\WebMailer.csproj", "{F27E9719-38BF-423B-97C3-BE70C441310A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{9D1ECC1A-6F74-49FC-8004-CD0436E76AA6}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,14 +26,6 @@ Global
 		{5EC580E6-030B-4C8F-B058-826799A56065}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5EC580E6-030B-4C8F-B058-826799A56065}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5EC580E6-030B-4C8F-B058-826799A56065}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F27E9719-38BF-423B-97C3-BE70C441310A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F27E9719-38BF-423B-97C3-BE70C441310A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F27E9719-38BF-423B-97C3-BE70C441310A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F27E9719-38BF-423B-97C3-BE70C441310A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9D1ECC1A-6F74-49FC-8004-CD0436E76AA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9D1ECC1A-6F74-49FC-8004-CD0436E76AA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9D1ECC1A-6F74-49FC-8004-CD0436E76AA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9D1ECC1A-6F74-49FC-8004-CD0436E76AA6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
