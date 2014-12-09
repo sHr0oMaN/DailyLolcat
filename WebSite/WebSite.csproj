@@ -148,6 +148,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="imgs\eated-cookie-lolcat.jpg" />
+    <Content Include="imgs\grumpy-cat-no.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\DailyLolCat.pubxml" />

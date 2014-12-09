@@ -1,11 +1,11 @@
 ﻿<h2>Signup.</h2>
 
-<h3>@ViewBag.Message</h3>
+<h4>@ViewBag.Message</h4><br/>
 
 @using (Html.BeginForm("Signup", "Home", FormMethod.Post))
 {
     <label for="emailAddress">Email:</label>
-    <input type="email" name="emailAddress" id="emailAddress" /><br />
+    <input type="email" name="emailAddress" id="emailAddress" /><br /><br/>
 
     <input type="submit" value="Get sum kittehs" class="btn btn-primary" />
 }

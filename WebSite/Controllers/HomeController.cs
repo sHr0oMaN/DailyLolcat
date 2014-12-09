@@ -46,13 +46,12 @@ namespace WebSite.Controllers
 
                 var person = new Person(emailAddress);
 
-                // Create the TableOperation that inserts the customer entity.
-                TableOperation insertOperation = TableOperation.Insert(person);
-
-                // Execute the insert operation.
-                table.Execute(insertOperation);
-
-                ViewBag.Message = "Wait one day for kitteh goodness.";
+                if (CheckIfCoolPersonExists(person, table))
+                {
+                    ViewBag.Message = string.Format("SNEAKY ;) {0} has already signed up.", person.EmailAddress);
+                    return View();
+                }
+                InsertCoolPerson(person, table);
             }
             catch (Exception e)
             {
@@ -62,10 +61,32 @@ namespace WebSite.Controllers
             return View();
         }
 
+        private bool CheckIfCoolPersonExists(Person person, CloudTable table)
+        {
+            TableOperation retrieveOperation = TableOperation.Retrieve<Person>(person.PartitionKey, person.RowKey);
+
+            // Execute the retrieve operation.
+            TableResult retrievedResult = table.Execute(retrieveOperation);
+
+            // Print the phone number of the result.
+            return retrievedResult.Result != null;
+        }
+
+        private void InsertCoolPerson(Person person, CloudTable table)
+        {
+            // Create the TableOperation that inserts the customer entity.
+            TableOperation insertOperation = TableOperation.Insert(person);
+
+            // Execute the insert operation.
+            table.Execute(insertOperation);
+
+            ViewBag.Message = "Wait one day for kitteh goodness.";
+        }
+
         [HttpGet]
         public ActionResult Upload()
         {
-            return View(); 
+            return View();
         }
 
         [HttpPost]
@@ -103,7 +124,7 @@ namespace WebSite.Controllers
                 ViewBag.Message = "PROBLEMZ :( " + e.Message;
             }
 
-            return View(); 
+            return View();
         }
 
         public ActionResult ViewRandom()
