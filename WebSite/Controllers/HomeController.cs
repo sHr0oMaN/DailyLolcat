@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.Ajax.Utilities;
@@ -15,6 +16,8 @@ namespace WebSite.Controllers
     {
         public ActionResult Index()
         {
+            var version = Assembly.GetExecutingAssembly().GetName().Version;    
+            ViewBag.Version = version.ToString();
             return View();
         }
 
@@ -86,6 +89,8 @@ namespace WebSite.Controllers
         [HttpGet]
         public ActionResult Upload()
         {
+            ViewBag.Message = "Chooz image file";
+
             return View();
         }
 

@@ -1,13 +1,9 @@
 ﻿<h2>Upload kitteh.</h2>
-<br/>
 
-@ViewBag.Message
+<h4>@ViewBag.Message</h4><br />
 
 @using (Html.BeginForm("Upload", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    <br/>
-    <br/>
-    <label for="file">Chooz image file:</label>
     <input type="file" name="file" id="file" /><br />
     
     <label for="tags">Tagz:</label>
