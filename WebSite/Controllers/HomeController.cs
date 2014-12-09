@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
@@ -14,10 +16,19 @@ namespace WebSite.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly CloudStorageAccount _storageAccount;
+
+        public HomeController()
+        {
+            var version = Assembly.GetExecutingAssembly().GetName().Version;
+            ViewBag.Version = version.ToString();
+
+            // Retrieve the storage account from the connection string.
+            _storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
+        }
+
         public ActionResult Index()
         {
-            var version = Assembly.GetExecutingAssembly().GetName().Version;    
-            ViewBag.Version = version.ToString();
             return View();
         }
 
@@ -40,10 +51,7 @@ namespace WebSite.Controllers
 
             try
             {
-                // Retrieve the storage account from the connection string.
-                CloudStorageAccount storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
-
-                CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
+                CloudTableClient tableClient = _storageAccount.CreateCloudTableClient();
 
                 CloudTable table = tableClient.GetTableReference("coolPeople");
 
@@ -105,12 +113,8 @@ namespace WebSite.Controllers
 
             try
             {
-                // Retrieve storage account from connection string.
-                var connectionString = CloudConfigurationManager.GetSetting("StorageConnectionString");
-                CloudStorageAccount storageAccount = CloudStorageAccount.Parse(connectionString);
-
                 // Create the blob client.
-                CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+                CloudBlobClient blobClient = _storageAccount.CreateCloudBlobClient();
 
                 // Retrieve reference to a previously created container.
                 CloudBlobContainer container = blobClient.GetContainerReference("lolcatz");
@@ -123,6 +127,24 @@ namespace WebSite.Controllers
                 }
 
                 ViewBag.Message = "File uploaded successfully";
+
+                // Insert tags for img
+                var uploadTags = tags.Split(';').ToList();
+                uploadTags.Remove(string.Empty);
+
+                if (uploadTags.Any())
+                {
+                    var tableClient = _storageAccount.CreateCloudTableClient();
+                    var table = tableClient.GetTableReference("imgTags");
+
+                    foreach (var uploadTag in uploadTags)
+                    {
+                        var insertOperation = TableOperation.Insert(new ImageTag(uploadTag, blockBlob.Uri));
+                        table.Execute(insertOperation);
+                    }
+                }
+
+
             }
             catch (Exception e)
             {
@@ -132,11 +154,38 @@ namespace WebSite.Controllers
             return View();
         }
 
-        public ActionResult ViewRandom()
+        [HttpGet]
+        public ActionResult Search(IEnumerable<string> model)
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Search here for da kittehs. Seperate tags with semi-colons (;)";
 
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult Search(string tags)
+        {
+            var searchTags = tags.Split(';');
+
+            // Create the table client.
+            CloudTableClient tableClient = _storageAccount.CreateCloudTableClient();
+
+            // Create the CloudTable object that represents the "people" table.
+            CloudTable table = tableClient.GetTableReference("imgTags");
+
+            // List to hold kitteh uris
+            var imgUris = new List<string>();
+
+            foreach (var searchTag in searchTags)
+            {
+                var query = new TableQuery<ImageTag>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, searchTag));
+
+                // add results to list
+                imgUris.AddRange(table.ExecuteQuery(query).Select(tag => tag.ImageUri.ToString()));
+            }
+
+
+            return View(imgUris);
         }
     }
 }

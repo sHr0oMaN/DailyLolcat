@@ -15,11 +15,6 @@ namespace WebSite.Models
             EmailAddress = emailAddress;
         }
 
-        public Person()
-        {
-            
-        }
-
         public string EmailAddress { get; set; }
     }
 }
