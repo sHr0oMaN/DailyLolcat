@@ -1,6 +1,6 @@
 ﻿using Microsoft.WindowsAzure.Storage.Table;
 
-namespace WebSite.Models
+namespace Common
 {
     public class Person : TableEntity
     {
@@ -15,9 +15,10 @@ namespace WebSite.Models
             EmailAddress = emailAddress;
         }
 
-        public Person()
-        {
-        }
+        //TODO: This is a bug
+        //public Person()
+        //{
+        //}
 
         public string EmailAddress { get; set; }
     }

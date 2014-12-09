@@ -2,7 +2,7 @@
 using System.Web;
 using Microsoft.WindowsAzure.Storage.Table;
 
-namespace WebSite.Models
+namespace Common
 {
     public class ImageTag : TableEntity
     {
