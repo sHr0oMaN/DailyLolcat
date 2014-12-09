@@ -16,9 +16,9 @@ namespace WebSite.Models
         }
 
         //TODO: This is a bug
-        //public Person()
-        //{
-        //}
+        public Person()
+        {
+        }
 
         public string EmailAddress { get; set; }
     }
