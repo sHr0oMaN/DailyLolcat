@@ -31,3 +31,15 @@ body {
 .jumbotron {
     background-color: transparent;
 }
+
+body {
+    font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+.jumbotron h1{
+    font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+.col-md-4 h2 {
+    font-family: "Comic Sans MS", cursive, sans-serif;
+}
