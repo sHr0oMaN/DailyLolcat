@@ -1,0 +1,23 @@
+﻿@model List<string>
+
+<h2>Search 4 kittehs.</h2>
+
+<h4>@ViewBag.Message</h4><br />
+
+@using (Html.BeginForm("Search", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <label for="tags">Search by tagz:</label>
+    <input type="text" name="tags" id="tags" /><br /><br />
+
+    <input type="submit" value="Search for kitteh" class="btn btn-primary" />
+    <br /><br />
+}
+
+@if (@Model != null)
+{
+    foreach (var item in @Model)
+    {
+
+        <img src=@item alt="kitteh" width="150px" style="border: solid black" />
+    }
+}
