@@ -15,7 +15,6 @@ namespace WebSite.Models
             EmailAddress = emailAddress;
         }
 
-        //TODO: This is a bug
         public Person()
         {
         }
